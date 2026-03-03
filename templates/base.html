@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Churn Dashboard</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+
+    <body>
+
+        <div class="container">
+            <div class="sidebar">
+                <h2>Churn System</h2>
+               <ul>
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="/add">Add Customer</a></li>
+               </ul>
+            </div>
+
+            <div class="content">
+                {% block content %}
+                {% endblock %}
+        </div>
+    </body>
+</html>

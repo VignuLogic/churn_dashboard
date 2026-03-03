@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+<div class="cards">
+    <div class="card">
+        <h3>Total Customers</h3>
+        <p>{{ total }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Churned Customers</h3>
+        <p>{{ churned }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Churn Rate</h3>
+        <p>{{ rate }}%</p>
+    </div>
+</div>
+
+<div class="chart-section">
+    <h2>Churn Overview</h2>
+    <div class="chart-placeholder">
+        Chart will apper here
+    </div>
+</div>
+
+
+<h2>Customer List</h2>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Monthly Charge</th>
+        <th>Contract Type</th>
+        <th>Churned</th>
+        <th>Action</th>
+    </tr>
+    {% for customer in customers %}
+    <tr>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.age }}</td>
+        <td>₹{{ customer.monthly_charge }}</td>
+        <td>{{ customer.contract_type }}</td>
+        <td>
+            {% if customer.churn == 1%}
+                Yes
+            {% else %}
+                No
+            {% endif %}
+        </td>
+        <td>
+            <a href="/edit/{{customer.id}}">Edit</a> |
+            <a href="/delete/{{customer.id}}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

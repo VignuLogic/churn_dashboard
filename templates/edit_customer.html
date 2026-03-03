@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Edit Customer</h1>
+
+<form method="post">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" value="{{ customer.name }}" required><br><br>
+
+    <label for="age">Age:</label><br>
+    <input type="number" id="age" name="age" value="{{ customer.age }}" required><br><br>
+
+    <label for="monthly_charge">Monthly Charge:</label><br>
+    <input type="number" step="0.01" id="monthly_charge" name="monthly_charge" value="{{ customer.monthly_charge }}" required><br><br>
+
+    <label for="contract_type">Contract Type:</label><br>
+    <select id="contract_type" name="contract_type" required>
+        <option value="">Select Contract Type</option>
+        <option value="month-to-month" {% if customer.contract_type == 'month-to-month' %}selected{% endif %}>Monthly</option>
+        <option value="one-year" {% if customer.contract_type == 'one-year' %}selected{% endif %}>Yearly</option>
+    </select><br><br>
+
+    <label for="churn">Churned:</label><br>
+    <select id="churned" name="churned" required>
+        <option value="yes" {% if customer.churn == "yes" %}selected{% endif %}>Yes</option>
+        <option value="no" {% if customer.churn == "no" %}selected{% endif %}>No</option>
+    </select><br><br>
+
+    <input type="submit" value="Update Customer">
+</form>
+{% endblock %}
