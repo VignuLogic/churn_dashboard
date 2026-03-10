@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Customer Profile</h1>
+
+<div class="customer-card">
+    
+    <p><strong>Name:</strong> {{ customer.name }}</p>
+    <p><strong>Age:</strong> {{ customer.age }}</p>
+    <p><strong>Monthly Charge:</strong> ₹{{ customer.monthly_charge }}</p>
+    <p><strong>Contract Type:</strong> {{ customer.contract_type }}</p>
+    
+    <p><strong>Churned:</strong>
+         {% if customer.churn == 1 %}
+         Yes
+         {% else %}
+         No
+         {% endif %}
+        </p>
+</div>
+
+{% endblock %}

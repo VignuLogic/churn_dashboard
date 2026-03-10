@@ -23,9 +23,10 @@
 
     <label for="churn">Churned:</label><br>
     <select id="churned" name="churned" required>
-        <option value="yes" {% if customer.churn == "yes" %}selected{% endif %}>Yes</option>
-        <option value="no" {% if customer.churn == "no" %}selected{% endif %}>No</option>
-    </select><br><br>
+    <option value="1" {% if customer.churn == 1 %}selected{% endif %}>Yes</option>
+    <option value="0" {% if customer.churn == 0 %}selected{% endif %}>No</option>
+    </select>
+    <br><br>
 
     <input type="submit" value="Update Customer">
 </form>

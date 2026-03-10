@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+ 
+<div class="home">
+
+    <h1> Customer Churn Analysis System</h1>
+
+    <p> 
+        This system helps bussiness track customers, analyze churn rate, and understand customer behavior using visual analytics.
+    </p>
+
+    <div class="home-buttons">
+
+     <a href="/" class="btn"> Go to Dashboard</a>
+    
+    <a href="/add" class="btn"> Add Customer</a>
+
+    </div>
+
+    <div class="features">
+
+        <div class="feature-card">
+            <h3>Track Customers</h3>
+            <p>Manages customer information and monitor thier subscription details easily.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Analyze Churn</h3>
+            <p>Identify churned customers and understand why they leave the service</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Visual Dashboard</h3>
+            <p>Interactive charts help bussiness understand customer behavior quickly.</p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

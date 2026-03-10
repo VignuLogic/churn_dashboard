@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <h1>Dashboard</h1>
 
 <div class="cards">
@@ -20,11 +21,26 @@
     </div>
 </div>
 
+<br><br>
+
+<!-- SEARCH -->
+<form method="GET" action="/">
+    <input type="text" name="search" placeholder="Search customer name">
+    <button type="submit">Search</button>
+</form>
+
+<!-- CHARTS -->
+ <div class="charts">
 <div class="chart-section">
     <h2>Churn Overview</h2>
-    <div class="chart-placeholder">
-        Chart will apper here
-    </div>
+    <canvas id="churnChart"></canvas>
+</div>
+
+<div class="chart-section">
+    <h2>Customers by Contract Type</h2>
+    <canvas id="contractChart"></canvas>
+</div>
+
 </div>
 
 
@@ -39,25 +55,107 @@
         <th>Churned</th>
         <th>Action</th>
     </tr>
+
     {% for customer in customers %}
     <tr>
         <td>{{ customer.name }}</td>
         <td>{{ customer.age }}</td>
         <td>₹{{ customer.monthly_charge }}</td>
         <td>{{ customer.contract_type }}</td>
+
         <td>
-            {% if customer.churn == 1%}
+            {% if customer.churn == 1 %}
                 Yes
             {% else %}
                 No
             {% endif %}
         </td>
+
         <td>
-            <a href="/edit/{{customer.id}}">Edit</a> |
-            <a href="/delete/{{customer.id}}">Delete</a>
+            <a href="/customer/{{customer.id}}" class="btn view-btn">View</a>
+            <a href="/edit/{{ customer.id }}" class="btn edit-btn">Edit</a>
+            <a href="/delete/{{ customer.id }}" class="btn delete-btn">Delete</a>
         </td>
     </tr>
     {% endfor %}
+
 </table>
+
+
+<!-- CHART SCRIPT -->
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* PIE CHART */
+
+    const total = Number("{{ total }}");
+    const churned = Number("{{ churned }}");
+    const active = total - churned;
+
+    const churnCtx = document.getElementById('churnChart').getContext('2d');
+
+    new Chart(churnCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Active Customers', 'Churned Customers'],
+            datasets: [{
+                data: [active, churned],
+                backgroundColor: [
+                    '#4CAF50',
+                    '#F44336'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: "bottom"
+                },
+                title: {
+                    display: true,
+                    text: "Customer Churn Distribution"
+                }
+            }
+        }
+    });
+
+
+    /* BAR CHART */
+
+    const contracts = JSON.parse('{{ contracts | tojson | safe }}');
+const contractCounts = JSON.parse('{{ contract_counts | tojson | safe }}');
+
+    const contractCtx = document.getElementById('contractChart').getContext('2d');
+
+    new Chart(contractCtx, {
+        type: 'bar',
+        data: {
+            labels: contracts,
+            datasets: [{
+                label: 'Customers',
+                data: contractCounts,
+                backgroundColor: '#36A2EB'
+            }]
+        },
+       options: {
+    responsive: true,
+    plugins:{
+        legend:{
+            display:false
+        }
+    },
+    scales:{
+        y:{
+            beginAtZero:true
+        }
+    }
+}
+    });
+
+});
+
+</script>
 
 {% endblock %}

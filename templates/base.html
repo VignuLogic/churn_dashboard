@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Churn Dashboard</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    </head>
+<head>
+    <title>Churn Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
 
-    <body>
+<body>
 
-        <div class="container">
-            <div class="sidebar">
-                <h2>Churn System</h2>
-               <ul>
-                    <li><a href="/">Dashboard</a></li>
-                    <li><a href="/add">Add Customer</a></li>
-               </ul>
-            </div>
-
-            <div class="content">
-                {% block content %}
-                {% endblock %}
+    <div class="container">
+        
+        <div class="sidebar">
+           
+            <h2>Churn System</h2>
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/">Dashboard</a></li>
+                <li><a href="/add">Add Customer</a></li>
+            </ul>
         </div>
-    </body>
+
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+    </div>
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
 </html>
