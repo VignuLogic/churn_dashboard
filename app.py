@@ -162,5 +162,27 @@ def customer_detail(id):
 
     return render_template("customer_detail.html", customer=customer)
 
+
+# / *** PREDICT TABLE ***/
+
+@app.route("/predict", methods=["GET", "POST"])
+def predict():
+
+    prediction = None
+
+    if request.method == "POST":
+        age = int(request.form["age"])
+        monthly = float(request.form["monthly_charge"])
+        contract = request.form["contract_type"]
+
+        if monthly > 1000 and contract == "Monthly":
+            prediction = "Likely to Churn ❌"
+        else:
+            prediction = "Will Stay ✅"
+
+    return render_template("predict.html", prediction=prediction)
+
 if __name__ == "__main__":
     app.run(debug=True)
+
+    

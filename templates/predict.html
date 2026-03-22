@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <!-- INFO SECTION -->
+<div class="predict-info">
+    <h2>How Prediction Works</h2>
+
+    <p>
+        This system checks a few basic customer details to guess whether the customer may leave (churn) or stay.
+    </p>
+
+    <table class="predict-concept-table">
+        <tr>
+            <th>Factor</th>
+            <th>What it Means</th>
+            <th>Effect</th>
+        </tr>
+
+        <tr>
+            <td>Monthly Charges</td>
+            <td>How much the customer pays every month</td>
+            <td>Higher cost → More chance to leave</td>
+        </tr>
+
+        <tr>
+            <td>Contract Type</td>
+            <td>Monthly or Yearly plan</td>
+            <td>Monthly → More chance to leave</td>
+        </tr>
+
+        <tr>
+            <td>Yearly Plan</td>
+            <td>Long-term plan</td>
+            <td>Less chance to leave</td>
+        </tr>
+
+        <tr>
+            <td>Final Result</td>
+            <td>Combines all factors</td>
+            <td>System shows Stay or Churn</td>
+        </tr>
+    </table>
+
+    <p style="margin-top:15px;">
+        👉 Right now, this is a simple rule-based system.  
+        👉 Later, we can improve it using Machine Learning for better accuracy.
+    </p>
+</div>
+    <br>
+    <br>
+
+
+<div class="predict-container">
+
+    <h1 class="page-title">Predict Customer Churn</h1>
+
+    <div class="predict-card">
+
+        <!-- FORM -->
+        <form method="POST" class="predict-form">
+
+            <div class="form-group">
+                <label>Age</label>
+                <input type="number" name="age" placeholder="Enter age" required>
+            </div>
+
+            <div class="form-group">
+                <label>Monthly Charge</label>
+                <input type="number" name="monthly_charge" placeholder="Enter amount" required>
+            </div>
+
+            <div class="form-group">
+                <label>Contract Type</label>
+                <select name="contract_type">
+                    <option value="Monthly">Monthly</option>
+                    <option value="Yearly">Yearly</option>
+                </select>
+            </div>
+
+            <button type="submit" class="predict-btn">Predict</button>
+
+        </form>
+
+        <!-- RESULT -->
+        {% if prediction %}
+        <div class="result-box">
+              {% if 'Likely' in prediction %}churn{% else %}safe{% endif %}">
+            <h2>Prediction Result</h2>
+            <p>{{ prediction }}</p>
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+{% endblock %}
