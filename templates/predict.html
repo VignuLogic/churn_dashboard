@@ -5,47 +5,61 @@
 
     <!-- INFO SECTION -->
 <div class="predict-info">
-    <h2>How Prediction Works</h2>
+    <h2>Prediction Methodology</h2>
 
     <p>
-        This system checks a few basic customer details to guess whether the customer may leave (churn) or stay.
+        This system analyzes customer behavior patterns to estimate the likelihood of churn.
+        The prediction is currently based on a rule-based analytical model that simulates
+        real-world business logic used in customer retention strategies.
     </p>
 
     <table class="predict-concept-table">
         <tr>
             <th>Factor</th>
-            <th>What it Means</th>
-            <th>Effect</th>
+            <th>Impact on Churn</th>
+            <th>Reasoning</th>
         </tr>
 
         <tr>
             <td>Monthly Charges</td>
-            <td>How much the customer pays every month</td>
-            <td>Higher cost → More chance to leave</td>
+            <td>High → Higher Risk</td>
+            <td>
+                Customers with higher monthly costs are more likely to discontinue services
+                due to financial burden or perceived low value.
+            </td>
         </tr>
 
         <tr>
             <td>Contract Type</td>
-            <td>Monthly or Yearly plan</td>
-            <td>Monthly → More chance to leave</td>
+            <td>Monthly → Higher Risk</td>
+            <td>
+                Short-term contracts provide flexibility, making it easier for customers to leave
+                without long-term commitment.
+            </td>
         </tr>
 
         <tr>
-            <td>Yearly Plan</td>
-            <td>Long-term plan</td>
-            <td>Less chance to leave</td>
+            <td>Yearly Contract</td>
+            <td>Lower Risk</td>
+            <td>
+                Long-term commitments indicate customer trust and reduce the probability of churn.
+            </td>
         </tr>
 
         <tr>
-            <td>Final Result</td>
-            <td>Combines all factors</td>
-            <td>System shows Stay or Churn</td>
+            <td>Prediction Logic</td>
+            <td>Combined Factors</td>
+            <td>
+                If a customer has high monthly charges and a short-term contract,
+                the system flags them as "Likely to Churn".
+            </td>
         </tr>
     </table>
 
     <p style="margin-top:15px;">
-        👉 Right now, this is a simple rule-based system.  
-        👉 Later, we can improve it using Machine Learning for better accuracy.
+        <b>Note:</b> This is a foundational predictive approach. In advanced implementations,
+        machine learning models such as Logistic Regression or Decision Trees are used
+        to improve accuracy and capture complex behavioral patterns.
     </p>
 </div>
     <br>
