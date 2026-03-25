@@ -1,8 +1,16 @@
 from flask import Flask, render_template, request, redirect
 import mysql.connector
 from config import DB_CONFIG
+import joblib
+import numpy as np
+import os
 
 app = Flask(__name__)
+
+ml_data = None
+if os.path.exists("model.pkl"):
+    ml_data = joblib.load("model.pkl")
+    print("Model loaded.")
 
 def get_db_connection():
     return mysql.connector.connect(**DB_CONFIG)
@@ -167,20 +175,50 @@ def customer_detail(id):
 
 @app.route("/predict", methods=["GET", "POST"])
 def predict():
-
     prediction = None
+    probability = None
 
     if request.method == "POST":
-        age = int(request.form["age"])
-        monthly = float(request.form["monthly_charge"])
-        contract = request.form["contract_type"]
-
-        if monthly > 1000 and contract == "Monthly":
-            prediction = "Likely to Churn ❌"
+        if ml_data is None:
+            prediction = "Model not ready. Run train_model.py first."
         else:
-            prediction = "Will Stay ✅"
+            try:
+                age     = int(request.form["age"])
+                monthly = float(request.form["monthly_charge"])
+                contract = request.form["contract_type"]
 
-    return render_template("predict.html", prediction=prediction)
+                model      = ml_data["model"]
+                le_contract = ml_data["le_contract"]
+                le_gender   = ml_data["le_gender"]
+                le_payment  = ml_data["le_payment"]
+
+                contract_encoded = le_contract.transform([contract])[0]
+                gender_encoded   = le_gender.transform(["Male"])[0]
+                payment_encoded  = le_payment.transform(["Credit Card"])[0]
+                tenure           = 12
+
+                features = np.array([[age, monthly, contract_encoded,
+                                      gender_encoded, tenure, payment_encoded]])
+
+                pred  = model.predict(features)[0]
+                proba = model.predict_proba(features)[0]
+
+                churn_prob = round(proba[1] * 100, 1)
+                stay_prob  = round(proba[0] * 100, 1)
+
+                if pred == 1:
+                    prediction  = "Likely to Churn"
+                    probability = churn_prob
+                else:
+                    prediction  = "Likely to Stay"
+                    probability = stay_prob
+
+            except Exception as e:
+                prediction = f"Error: {str(e)}"
+
+    return render_template("predict.html",
+                           prediction=prediction,
+                           probability=probability)
 
 if __name__ == "__main__":
     app.run(debug=True)

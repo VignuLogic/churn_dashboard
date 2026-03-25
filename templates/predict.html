@@ -2,15 +2,11 @@
 
 {% block content %}
 
-
-    <!-- INFO SECTION -->
 <div class="predict-info">
     <h2>Prediction Methodology</h2>
-
     <p>
-        This system analyzes customer behavior patterns to estimate the likelihood of churn.
-        The prediction is currently based on a rule-based analytical model that simulates
-        real-world business logic used in customer retention strategies.
+        This system uses a <strong>Logistic Regression</strong> machine learning model
+        trained on 300 customer records to predict churn probability.
     </p>
 
     <table class="predict-concept-table">
@@ -19,96 +15,105 @@
             <th>Impact on Churn</th>
             <th>Reasoning</th>
         </tr>
-
         <tr>
             <td>Monthly Charges</td>
             <td>High → Higher Risk</td>
-            <td>
-                Customers with higher monthly costs are more likely to discontinue services
-                due to financial burden or perceived low value.
-            </td>
+            <td>Higher costs increase financial burden and reduce perceived value.</td>
         </tr>
-
         <tr>
-            <td>Contract Type</td>
-            <td>Monthly → Higher Risk</td>
-            <td>
-                Short-term contracts provide flexibility, making it easier for customers to leave
-                without long-term commitment.
-            </td>
+            <td>Monthly Contract</td>
+            <td>Higher Risk</td>
+            <td>Short-term contracts make it easy for customers to leave anytime.</td>
         </tr>
-
         <tr>
             <td>Yearly Contract</td>
             <td>Lower Risk</td>
-            <td>
-                Long-term commitments indicate customer trust and reduce the probability of churn.
-            </td>
+            <td>Long-term commitment indicates trust and loyalty.</td>
         </tr>
-
         <tr>
-            <td>Prediction Logic</td>
-            <td>Combined Factors</td>
-            <td>
-                If a customer has high monthly charges and a short-term contract,
-                the system flags them as "Likely to Churn".
-            </td>
+            <td>Age</td>
+            <td>Younger → Higher Risk</td>
+            <td>Younger customers tend to switch services more frequently.</td>
         </tr>
     </table>
 
-    <p style="margin-top:15px;">
-        <b>Note:</b> This is a foundational predictive approach. In advanced implementations,
-        machine learning models such as Logistic Regression or Decision Trees are used
-        to improve accuracy and capture complex behavioral patterns.
+    <p class="model-note">
+        Model: Logistic Regression — Accuracy: <strong>78.3%</strong> on test data.
     </p>
 </div>
-    <br>
-    <br>
-
 
 <div class="predict-container">
-
     <h1 class="page-title">Predict Customer Churn</h1>
 
     <div class="predict-card">
 
-        <!-- FORM -->
         <form method="POST" class="predict-form">
 
             <div class="form-group">
                 <label>Age</label>
-                <input type="number" name="age" placeholder="Enter age" required>
+                <input type="number" name="age" 
+                       placeholder="Enter customer age" 
+                       value="{{ request.form.age }}" required>
             </div>
 
             <div class="form-group">
-                <label>Monthly Charge</label>
-                <input type="number" name="monthly_charge" placeholder="Enter amount" required>
+                <label>Monthly Charge (₹)</label>
+                <input type="number" name="monthly_charge" 
+                       placeholder="Enter monthly amount" 
+                       value="{{ request.form.monthly_charge }}" required>
             </div>
 
             <div class="form-group">
                 <label>Contract Type</label>
                 <select name="contract_type">
-                    <option value="Monthly">Monthly</option>
-                    <option value="Yearly">Yearly</option>
+                    <option value="Monthly" {{ 'selected' if request.form.contract_type == 'Monthly' }}>Monthly</option>
+                    <option value="One Year" {{ 'selected' if request.form.contract_type == 'One Year' }}>One Year</option>
+                    <option value="Two Year" {{ 'selected' if request.form.contract_type == 'Two Year' }}>Two Year</option>
                 </select>
             </div>
 
-            <button type="submit" class="predict-btn">Predict</button>
+            <button type="submit" class="predict-btn">Run Prediction</button>
 
         </form>
 
-        <!-- RESULT -->
         {% if prediction %}
-        <div class="result-box">
-              {% if 'Likely' in prediction %}churn{% else %}safe{% endif %}">
-            <h2>Prediction Result</h2>
-            <p>{{ prediction }}</p>
+
+        {% if 'Churn' in prediction %}
+        <div class="result-box result-churn">
+        {% else %}
+        <div class="result-box result-safe">
+        {% endif %}
+
+            <div class="result-icon">
+                {% if 'Churn' in prediction %}⚠{% else %}✓{% endif %}
+            </div>
+
+            <h2>{{ prediction }}</h2>
+
+            {% if probability %}
+            <p class="prob-label">Confidence: {{ probability }}%</p>
+            <div class="prob-bar-bg">
+                {% if 'Churn' in prediction %}
+                <div class="prob-bar-fill fill-churn" id="prob-bar"></div>
+                {% else %}
+                <div class="prob-bar-fill fill-safe" id="prob-bar"></div>
+                {% endif %}
+            </div>
+            {% endif %}
+
         </div>
+
         {% endif %}
 
     </div>
-
 </div>
 
+<script>
+    var prob = {{ probability if probability else 0 }};
+    var bar = document.getElementById("prob-bar");
+    if (bar) {
+        bar.style.width = prob + "%";
+    }
+</script>
 
 {% endblock %}
