@@ -37,7 +37,7 @@ featuring a real Machine Learning model to predict customer churn probability.
 
 - Algorithm: Logistic Regression
 - Training data: 300+ customer records
-- Features: Age, Monthly Charge, Contract Type, Gender, Tenure, Payment Method
+- Features: Age, Monthly Charge, Contract Type, Tenure
 - Accuracy: 78.3% on test data
 
 ## Setup Instructions
@@ -53,16 +53,24 @@ cd churn_dashboard
 pip install -r requirements.txt
 ```
 
-3. Set up MySQL database and update `config.py` with your credentials
+3. Create a `.env` file in the root folder with your database credentials
+```
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=churn_db
+```
 
-4. Train the ML model
+4. Set up MySQL database and import your data
+
+5. Train the ML model
 ```bash
 python train_model.py
 ```
 
-5. Run the app
+6. Run the app
 ```bash
 python app.py
 ```
 
-6. Open `http://localhost:5000` in your browser
+7. Open `http://localhost:5000` in your browser

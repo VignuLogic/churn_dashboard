@@ -72,6 +72,15 @@
                 </select>
             </div>
 
+        </tr>
+            <div class="form-group">
+            <label>Tenure (months)</label>
+            <input type="number" name="tenure" 
+                placeholder="How many months as customer" 
+                value="{{ request.form.tenure }}" required>
+            </div>
+        <tr>
+
             <button type="submit" class="predict-btn">Run Prediction</button>
 
         </form>

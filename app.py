@@ -195,7 +195,7 @@ def predict():
                 contract_encoded = le_contract.transform([contract])[0]
                 gender_encoded   = le_gender.transform(["Male"])[0]
                 payment_encoded  = le_payment.transform(["Credit Card"])[0]
-                tenure           = 12
+                tenure           = int(request.form["tenure"])
 
                 features = np.array([[age, monthly, contract_encoded,
                                       gender_encoded, tenure, payment_encoded]])
@@ -221,6 +221,6 @@ def predict():
                            probability=probability)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
 
     

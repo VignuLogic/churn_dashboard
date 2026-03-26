@@ -93,6 +93,21 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
+.card h3 {
+    font-size: 14px;
+    color: #888;
+    font-weight: 400;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.card p {
+    font-size: 36px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+}
 
 .charts{
     display:flex;
