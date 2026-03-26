@@ -37,7 +37,7 @@ def dashboard():
     if total_customers > 0:
         churn_rate = round((churned / total_customers) * 100, 2)
 
-    # Search customers
+    # # Search customers
     search = request.args.get("search")
 
     if search:
@@ -78,7 +78,7 @@ def dashboard():
 
 
 # DELETE BUTTON
-@app.route("/delete/<int:id>")
+@app.route("/delete/<int:id>", methods=["POST"])
 def delete_customer(id):
     conn = get_db_connection()
     cursor = conn.cursor()

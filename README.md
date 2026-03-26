@@ -3,6 +3,19 @@
 A customer churn analytics web application built with Flask and MySQL,
 featuring a real Machine Learning model to predict customer churn probability.
 
+## Screenshots
+
+### Home Page
+![Home](screenshots/home.png)
+
+### Dashboard
+![Dashboard Top](screenshots/dashboard_top.png)
+![Dashboard Table](screenshots/dashboard_table.png)
+
+### Churn Prediction
+![Predict](screenshots/predict.png)
+![Predict Result](screenshots/predict_result.png)
+
 ## Features
 
 - Dashboard with live churn rate, total customers, and churned count
@@ -24,29 +37,8 @@ featuring a real Machine Learning model to predict customer churn probability.
 
 - Algorithm: Logistic Regression
 - Training data: 300+ customer records
-- Features used: Age, Monthly Charge, Contract Type, Gender, Tenure, Payment Method
+- Features: Age, Monthly Charge, Contract Type, Gender, Tenure, Payment Method
 - Accuracy: 78.3% on test data
-
-## Project Structure
-```
-churn_dashboard/
-├── app.py               # Main Flask application
-├── train_model.py       # ML model training script
-├── add_sample_data.py   # Sample data generator
-├── config.py            # Database configuration
-├── model.pkl            # Trained ML model
-├── static/
-│   ├── css/style.css
-│   └── js/script.js
-└── templates/
-    ├── base.html
-    ├── home.html
-    ├── dashboard.html
-    ├── predict.html
-    ├── add_customer.html
-    ├── edit_customer.html
-    └── customer_detail.html
-```
 
 ## Setup Instructions
 
@@ -74,7 +66,3 @@ python app.py
 ```
 
 6. Open `http://localhost:5000` in your browser
-
-## Screenshots
-
-Coming soon.
